@@ -1,0 +1,175 @@
+FOUNDATION:
+Carousel Orbit issues:
+	set Motion UI on file if having problems with partial rendering
+	https://github.com/zurb/foundation-sites/issues/8702
+	Add script:
+		<script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
+		<script>$(document).foundation(); </script>
+
+DEVTOOLS
+	ctrl option c
+	ctrl option i
+
+CODE TIPS:
+	||= means “assign this value unless it already has a value”
+
+VAGRANT/VM
+	run this first: 
+	curl -O http://d10ofk0qhbh8u9.cloudfront.net/Vagrantfile
+	then this:
+	vagrant up
+
+JAVASCRIPT
+	False: false, 0, undefined, “”, null, NaN
+
+
+
+SUBLIME commands------
+	cmd + ctrl + g : select all same words as where cursor is
+	cmd + k + b
+
+
+RAKE commands ----
+	To view list of available tasks, run rake with either -T or --tasks
+
+HTML/CSS
+	&nbsp To create a space without a break
+	https://smacss.com/book/categorizing
+
+	Dealing with scroll issues on mobile(nested divs):
+		-webkit-overflow-scrolling: touch;
+		Reference : https://weblog.west-wind.com/posts/2013/jun/01/smoothing-out-div-scrolling-in-mobile-webkit-browsers#Gotchas
+
+SSH GITHUB
+	https://help.github.com/articles/generating-an-ssh-key/
+	1. Enter ls -al ~/.ssh to see if existing SSH keys are present (ex. id_dsa.pub)
+	IF NO KEY
+	2.ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+		press ENTER and then TYPE PW
+	3. eval "$(ssh-agent -s)" To ensure SSH is enabled
+	4.pbcopy < ~/.ssh/id_rsa.pub To add New SSH key to GITHUB
+//////
+
+git fetch upstream
+ 
+git checkout -b ticket# upstream/epic#
+ 
+git add .
+
+git commit -m “"
+  
+git push origin ticket#
+ 
+pull request from ticket# to upstream
+
+RAKE MIGRATIONS
+	rake db:migrate:status <- Checks all migration versions
+	rake db:migrate:up VERSION=version_no <— adds(migrates) a specific migration
+	rake db:migrate:down VERSION=version_no <— deletes a specific migration
+CREATE MIGRATIONS
+	rails generate migration CreateProducts name:string
+ENVIRONMENT MIGRATIONS
+	bin/rails db:migrate RAILS_ENV=production. <— specify depending on ENV
+
+
+/////
+
+SINATRA HTML.CSS commands ——
+	View Source: Command-Option-U
+	switch database PSQL: \connect DBNAME
+
+	
+————————————
+GIT stuff: 
+	git checkout -b name_branch origin/name_branch
+	git clean [removes untracked files, pass -f to force it] -f 
+	git clean — . [removes untracked files part of DB]
+		https://git-scm.com/docs/git-clean
+	git checkout -- . [try this to remove all untracked files
+	https://help.github.com/articles/changing-a-remote-s-url/
+
+Dropping tables: 
+	http://stackoverflow.com/questions/4020131/rails-db-migration-how-to-drop-a-table
+
+Deleting branches: 
+	If you want more detailed explanations of the following commands, then see the long answers in the next section.
+
+Deleting a remote branch:
+	http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely
+
+	git push origin --delete <branch>  # Git version 1.7.0 or newer
+	git push origin :<branch>          # Git versions older than 1.7.0
+Deleting a local branch:
+
+	git branch --delete <branch>
+	git branch -d <branch> # Shorter version
+	git branch -D <branch> # Force delete un-merged branches
+Deleting a local remote-tracking branch:
+
+	git branch --delete --remotes <remote>/<branch>
+	git branch -dr <remote>/<branch> # Shorter
+
+	git fetch <remote> --prune # Delete multiple obsolete tracking bringanches
+	git fetch <remote> -p      # Shorter
+Amend comments on commit
+	Commit has not been pushed online
+	On the command line, navigate to the repository that contains the commit you want to amend.
+	Type git commit --amend and press Enter
+Revert commits as group
+	get git log and the commit ##
+	git revert commit##..HEAD
+
+Revert single commit but keep in log the revert(clean way):
+	git revert --strategy resolve <commit>
+
+Revert merge when NOT PUSHED YET
+	git log and check last commit
+	git reset --hard lascommit_sha
+
+Rename git branches:
+	 current branch just do. git branch -m new_name.
+	 another branch git branch -m old_name new_name.
+	 If pushed
+
+Revert to previous Gemlock if bundle update broke things: 
+	git checkout -- Gemfile.lock
+———————————
+
+RAILS
+	bin/spring stop >- When rails c is fucked up
+	bin/rails server -b0.0.0.0 (can only work through this binding address).
+	-T (to install without testing)
+	—database = postgress (to override the sqlite3  default )
+	bin/rails console (REPL)-> interacts with development stage
+	kill -9 $(lsof -i tcp:3000 -t) -> To KILL a server if already running
+	lsof -i tcp port
+
+	bin/rails generate migration name_of_it description:text (use bin/rails g for short)
+	Easier:
+	bin/rails g model Product description:text (this will create the model and migration file)
+
+RAILS SIMULATE APP ON MOBILE:
+	1. Get current IP address
+	2. If on Vagrant run rails s -b 0.0.0.0 (set bind to 0.0.0.0 in case it doesn’t work without vagrant)
+	3. current_IP_address:3000 on your browser
+	Reference: http://stackoverflow.com/questions/10621282/how-do-i-run-a-development-rails-app-website-on-an-ipod
+
+work stuff:
+//for when g++ package isn’t installed/available (error:
+	sudo apt-get install build-essential
+	For Ubuntu
+	Source: http://askubuntu.com/questions/725057/g-command-not-found-when-building-sevensquare-with-make
+// create secrets.yml file for secret_token & key server error
+	for development type:
+		development:
+			secret_key_base: GENERATE SECRET KEY RAKE SECRET
+	Be careful with token for git. Don’t expose!! 
+
+
+CSS TRICKS
+	Footer skirt riding up issues: http://stackoverflow.com/questions/42294/how-do-you-get-the-footer-to-stay-at-the-bottom-of-a-web-page?rq=1
+
+
+GOOGLE MAPS JS API
+// Spacing out too many markers on screen and prevent long waiting/DOMloading times
+	https://developers.google.com/maps/documentation/javascript/examples/marker-animations-iteration
