@@ -29,8 +29,6 @@ SUBLIME commands------
 	cmd + k + b
 
 
-RAKE commands ----
-	To view list of available tasks, run rake with either -T or --tasks
 
 HTML/CSS
 	&nbsp To create a space without a break
@@ -63,13 +61,23 @@ git push origin ticket#
 pull request from ticket# to upstream
 
 RAKE MIGRATIONS
+To view list of available tasks, run rake with either -T or --tasks
 	rake db:migrate:status <- Checks all migration versions
 	rake db:migrate:up VERSION=version_no <— adds(migrates) a specific migration
 	rake db:migrate:down VERSION=version_no <— deletes a specific migration
+	rails g migration DropNameOfTable(plural) <— drop tables properly 				           	drop_table :tablename(plural) do |t| etc… To make sure you can rollback otherwise apply up/down
+
 CREATE MIGRATIONS
+
 	rails generate migration CreateProducts name:string
+
 ENVIRONMENT MIGRATIONS
+
 	bin/rails db:migrate RAILS_ENV=production. <— specify depending on ENV
+
+GEM FILES
+	bundle update -gems
+	bundle update —-source gem
 
 
 /////
@@ -91,8 +99,7 @@ GIT stuff:
 Dropping tables: 
 	http://stackoverflow.com/questions/4020131/rails-db-migration-how-to-drop-a-table
 
-Deleting branches: 
-	If you want more detailed explanations of the following commands, then see the long answers in the next section.
+DELETING BRANCHES
 
 Deleting a remote branch:
 	http://stackoverflow.com/questions/2003505/how-to-delete-a-git-branch-both-locally-and-remotely
@@ -169,7 +176,34 @@ work stuff:
 CSS TRICKS
 	Footer skirt riding up issues: http://stackoverflow.com/questions/42294/how-do-you-get-the-footer-to-stay-at-the-bottom-of-a-web-page?rq=1
 
+POSTGRES SETUP
+-after install (home-brew or w/e)
+	~ psql postgres
+	 Create new user with password
+	 Give it ‘login’ and ‘created’ privileges
+	 Go to rails on database config setup db names and pw/ development/test/production
+	 rake db:setup
+	 Done.
 
+	MORE DETAILED: 
+		on the command line(~): psql postgres
+					 CREATE ROLE namedbadmin WITH PASSWORD ‘somepassword’;
+					 CREATE DATABASE namedb_development; (same for test and production)
+					 GRANT ALL TO namedbadmin ON DATABASE namedb_development; (same for test and production)
+					 ALTER ROLE namedbadmin WITH LOGIN;
+					 ALTER USER namedbadmin CREATEDB;
+
+		on your rails app: go to config/database.yml and change the following under default(it’ll be sqlite3 as default)
+				    adapter: postgresql
+				    encoding: unicode
+  				    host: localhost
+				    pool: 5
+				    timeout: 5000
+		  		    username: namedbadmin
+				    password: somepassword
+		And under development/test/production just write your DATABASE name ex: database: namedb_development
+		
+					
 GOOGLE MAPS JS API
 // Spacing out too many markers on screen and prevent long waiting/DOMloading times
 	https://developers.google.com/maps/documentation/javascript/examples/marker-animations-iteration
